@@ -1,0 +1,24 @@
+# Build the wheels (3rd party libs as binaries) required for this project
+
+# use:
+# $ docker build -t DOCKER-IMAGE:latest -f build.docker .
+# $ docker run --rm -v "$(pwd)":/application -v "$(pwd)"/wheelhouse:/wheelhouse DOCKER-IMAGE
+
+FROM pypy:2
+
+# Eg any apt installs
+#RUN apt-get install -qy libffi-dev libssl-dev pypy-dev
+RUN pip install --upgrade pip
+# Note that the wheel package is only necessary for building wheels; the functionality to install them is built in to pip
+RUN pip install wheel
+
+ENV WHEELHOUSE=/wheelhouse
+ENV PIP_WHEEL_DIR=/wheelhouse
+ENV PIP_FIND_LINKS=/wheelhouse
+
+VOLUME /wheelhouse
+VOLUME /application
+
+WORKDIR /application
+
+ENTRYPOINT pip wheel -r requirements.txt

@@ -1,0 +1,17 @@
+FROM pypy:2
+
+# ADD cos just a static copy of the local filesystem's wheelhouse version now
+ADD wheelhouse /wheelhouse
+VOLUME /application
+WORKDIR /application
+
+ENV WHEELHOUSE=/wheelhouse
+ENV PIP_WHEEL_DIR=/wheelhouse
+ENV PIP_FIND_LINKS=/wheelhouse
+
+# copy in setup.py as all that's needed in here (before subsequent RUN of this container)
+ADD setup.py /application/
+
+# Using our wheelhouse (shared from host machine or other container)
+# Ignore errors about insecure source during RUN
+RUN pip install --no-index -f wheelhouse -e .

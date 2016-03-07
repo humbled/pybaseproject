@@ -1,0 +1,6 @@
+/*$py.class
+/.virtualenv/
+/bin/
+**/*.pyc
+*.pyc
+/wheelhouse/*.whl

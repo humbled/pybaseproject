@@ -1,0 +1,20 @@
+# Replace all-caps words with actuals
+version: '2'
+services:
+  pybase:
+    # Build the image from run.dockerfile 
+    build:
+      context: .
+      dockerfile: run.docker
+  
+    # The following stuff all happens during compose 'up':
+    
+    command: pypy -m pybaseproj.calculator
+    working_dir: /application
+    
+    volumes:
+     - /Users/brad/Development/python/workspace/PyBaseProj:/application
+     - /Users/brad/Development/python/workspace/PyBaseProj/wheelhouse:/wheelhouse
+     #- /COMPLETE/PATH/TO/PROJECT/DIR:/application
+     #- /COMPLETE/PATH/TO/PROJECT/DIR/wheelhouse:/wheelhouse
+     

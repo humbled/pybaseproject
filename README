@@ -1,0 +1,16 @@
+
+# Meta: Have used 'pybase' as the useless docker image (repository) name. Replace the intended name for your image
+
+Prep the dependencies:
+  mkdir -p wheelhouse
+  docker build -t pybase:latest -f build.docker .
+  docker run --rm -v "$(pwd)":/application -v "$(pwd)"/wheelhouse:/wheelhouse pybase
+and re-run these if deps change.
+In IDE (eg pydev in eclipse) add all as a dependency to pythonpath
+
+Build the runtime services:
+  docker-compose build
+  
+Run the associated containers. This will pick up code changes under the current dir because of the volume setup, so no need to rebuild
+  docker-compose up -d
+
